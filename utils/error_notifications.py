@@ -20,7 +20,7 @@ async def webhook_log(ctx, error):
     if ctx is None:
         if config["notifications"]["ratelimit_notifications"]:
             embed = discord.Embed(
-                title="AI Selfbot Ratelimited",
+                title="AI Bot Ratelimited",
                 description=f"{error}",
                 color=discord.Color.red(),
                 timestamp=datetime.now(),
@@ -29,28 +29,28 @@ async def webhook_log(ctx, error):
             return
     elif isinstance(ctx, discord.Message):
         embed = discord.Embed(
-            title="AI Selfbot Error",
+            title="AI Bot Error",
             description=f"Message: `{ctx.content}`\nTrigger: {ctx.jump_url}\nError: `{error}`",
             color=discord.Color.red(),
             timestamp=datetime.now(),
         )
     elif isinstance(ctx, discord.ext.commands.Context):
         embed = discord.Embed(
-            title="AI Selfbot Error",
+            title="AI Bot Error",
             description=f"Command: `{ctx.command}`\nTrigger: {ctx.message.jump_url}\nError: `{error}`",
             color=discord.Color.red(),
             timestamp=datetime.now(),
         )
     else:
         embed = discord.Embed(
-            title="AI Selfbot Error",
+            title="AI Bot Error",
             description=f"Error: `{error}`",
             color=discord.Color.red(),
             timestamp=datetime.now(),
         )
 
     data = {
-        "username": "AI Selfbot",
+        "username": "AI Bot",
         "avatar_url": "https://cdn.discordapp.com/avatars/1040916971635621959/a_e52b4f8a9115021e5cc2e510232e8bd8.gif?size=256",
         "embeds": [embed.to_dict()],
     }

@@ -70,7 +70,7 @@ def get_input(prompt, validator=None, default=None, password=False):
 def create_config():
     clear_console()
 
-    print(f"\n{Fore.CYAN}=== AI Selfbot Setup Wizard ==={Style.RESET_ALL}\n")
+    print(f"\n{Fore.CYAN}=== AI Bot Setup Wizard ==={Style.RESET_ALL}\n")
 
     config = {
         "bot": {
