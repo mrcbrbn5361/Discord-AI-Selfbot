@@ -1,10 +1,9 @@
-discord.py-self
+discord.py>=2.3.0
 colorama
 curl_cffi
 httpx
-asyncio
 python-dotenv
 pyYAML
 requests
 groq
-openai
+openai>=1.51.0,<2.0.0

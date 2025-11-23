@@ -48,7 +48,7 @@ update_available = latest_version and latest_version != current_version
 
 if update_available:
     print(
-        f"{Fore.RED}A new version of the AI Selfbot is available! Please update to {latest_version} at: \nhttps://github.com/Najmul190/Discord-AI-Selfbot/releases/latest{Style.RESET_ALL}"
+        f"{Fore.RED}A new version of the AI Bot is available! Please update to {latest_version} at: \nhttps://github.com/Najmul190/Discord-AI-Selfbot/releases/latest{Style.RESET_ALL}"
     )
 
     time.sleep(5)
@@ -78,7 +78,12 @@ OWNER_ID = config["bot"]["owner_id"]
 TRIGGER = config["bot"]["trigger"].lower().split(",")
 DISABLE_MENTIONS = config["bot"]["disable_mentions"]
 
-bot = commands.Bot(command_prefix=PREFIX, help_command=None)
+intents = discord.Intents.default()
+intents.message_content = True
+intents.guilds = True
+intents.members = True
+
+bot = commands.Bot(command_prefix=PREFIX, help_command=None, intents=intents)
 
 bot.owner_id = OWNER_ID
 bot.active_channels = set(get_channels())
@@ -125,7 +130,7 @@ def create_border(char="═"):
 def print_header():
     width = get_terminal_size()
     border = create_border()
-    title = "AI Selfbot by Najmul"
+    title = "AI Bot by Najmul"
     padding = " " * ((width - len(title) - 2) // 2)
 
     print(f"{Fore.CYAN}╔{border}╗")
@@ -150,18 +155,18 @@ async def on_ready():
         await bot.close()
         sys.exit(1) # exit the program
 
-    bot.selfbot_id = bot.user.id  # this has to be here, or else it won't work
+    bot.bot_user_id = bot.user.id
 
     clear_console()
 
     print_header()
     print(
-        f"AI Selfbot successfully logged in as {Fore.CYAN}{bot.user.name} ({bot.selfbot_id}){Style.RESET_ALL}.\n"
+        f"AI Bot successfully logged in as {Fore.CYAN}{bot.user.name} ({bot.bot_user_id}){Style.RESET_ALL}.\n"
     )
 
     if update_available:
         print(
-            f"{Fore.RED}A new version of the AI Selfbot is available! Please update to {latest_version} at: \nhttps://github.com/Najmul190/Discord-AI-Selfbot/releases/latest{Style.RESET_ALL}\n"
+            f"{Fore.RED}A new version of the AI Bot is available! Please update to {latest_version} at: \nhttps://github.com/Najmul190/Discord-AI-Selfbot/releases/latest{Style.RESET_ALL}\n"
         )
 
     if len(bot.active_channels) > 0:
@@ -191,7 +196,7 @@ async def setup_hook():
 def should_ignore_message(message):
     return (
         message.author.id in bot.ignore_users
-        or message.author.id == bot.selfbot_id
+        or message.author.id == bot.user.id
         or message.author.bot
     )
 
@@ -205,7 +210,7 @@ def is_trigger_message(message):
     replied_to = (
         message.reference
         and message.reference.resolved
-        and message.reference.resolved.author.id == bot.selfbot_id
+        and message.reference.resolved.author.id == bot.user.id
     )
     is_dm = isinstance(message.channel, discord.DMChannel) and bot.allow_dm
     is_group_dm = isinstance(message.channel, discord.GroupChannel) and bot.allow_gc
