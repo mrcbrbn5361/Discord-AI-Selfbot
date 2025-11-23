@@ -6,11 +6,9 @@ if not exist bot-env (
     echo 'bot-env' folder not found. Installing...
     python -m venv bot-env
     call .\bot-env\Scripts\activate.bat
-    pip install curl_cffi fake_useragent httpx asyncio python-dotenv pyYAML requests groq openai colorama discord.py>=2.3.0
+    pip install -r requirements.txt
 
     cls
-
-    echo Installed.
 )
 
 call .\bot-env\Scripts\activate.bat
